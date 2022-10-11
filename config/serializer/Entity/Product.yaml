@@ -1,0 +1,22 @@
+App\Entity\Product:
+  attributes:
+    brand:
+      groups: ['category', 'product']
+    model:
+      groups: ['category', 'product']
+    title:
+      groups: ['category', 'product']
+    platform:
+      groups: ['category', 'product']
+    ean:
+      groups: ['category', 'product']
+    imei:
+      groups: ['category', 'product']
+    category:
+      groups: ['product']
+    status:
+      groups: ['category', 'product']
+    createdat:
+      groups: ['category', 'product']
+    updatedat:
+      groups: ['category', 'product']

@@ -1,0 +1,216 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cash Converters | Category {{ category.name }} Features{% endblock %}
+
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/vendor/datatables/media/css/dataTables.bootstrap5.css') }}" />
+{% endblock css %}
+
+{% block body %}
+
+    <header class="page-header">
+        <h2>Category {{ category.name }}</h2>
+
+        <div class="right-wrapper text-end">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{{ url('app_home') }}">
+                        <i class="bx bx-home-alt"></i>
+                    </a>
+                </li>
+
+                <li><a href="{{ url('app_category') }}"><span>Categories</span></a></li>
+
+                <li><span>{{ category.name }}</span></li>
+
+            </ol>
+            <span class="sidebar-right-toggle"></span>
+        </div>
+    </header>
+
+    <a type="button" class="mb-1 mt-1 mr-1 btn btn-primary" href="{{ url('app_home') }}">Go home</a>
+
+    <hr class="opacity-0">
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <section class="card card-category-info mb-4">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                    <h2 class="card-title">Info</h2>
+                </header>
+
+                <div class="card-body">
+
+                    <div class="form-group row pb-3">
+                        <div>
+                            <label class="col-sm-3 control-label text-sm-end pt-2 required" for="product_title">Name</label>
+                            <input type="text" class="form-control col-sm-9" value="{{ category.name }}" disabled readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-3">
+                        <div>
+                            <label class="col-sm-3 control-label text-sm-end pt-2 required" for="product_title">Description</label>
+                            <input type="text" class="form-control col-sm-9" value="{{ category.description }}" disabled readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-3">
+                        <div>
+                            <label class="col-sm-3 control-label text-sm-end pt-2 required" for="product_title">Status</label>
+                            <input type="text" class="form-control col-sm-9" value="{{ category.status.name }}" disabled readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-3">
+                        <div>
+                            <label class="col-sm-3 control-label text-sm-end pt-2 required" for="product_title">Created at</label>
+                            <input type="text" class="form-control col-sm-9" value="{{ category.createdAt|date('Y-m-d H:i:s', 'Europe/Madrid') }}" disabled readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-3">
+                        <div>
+                            <label class="col-sm-3 control-label text-sm-end pt-2 required" for="product_title">Updated at</label>
+                            <input type="text" class="form-control col-sm-9" value="{{ category.updatedAt|date('Y-m-d H:i:s', 'Europe/Madrid') }}" disabled readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group row pb-3">
+                        <div>
+                            <label class="col-sm-3 control-label text-sm-end pt-2 required" for="product_title">Number of products</label>
+                            <input type="text" class="form-control col-sm-9" value="{{ category.products.count }}" disabled readonly>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <section class="card mb-4">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                    <h2 class="card-title">Add product</h2>
+                </header>
+
+                <div class="card-body">
+                    {% if category.categoryquestions|length > 0 %}
+                        {% include 'product/form.html.twig' %}
+                    {% else %}
+                        <p>No questions available</p>
+                    {% endif %}
+                </div>
+            </section>
+
+        </div>
+
+        <div class="col-md-12">
+
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                    <h2 class="card-title">Products</h2>
+                </header>
+
+                <div class="card-body">
+                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+
+                        <thead>
+                        <tr>
+                            <th>Brand</th>
+                            <th>Model</th>
+                            <th>Title</th>
+                            <th>Platform</th>
+                            <th>Ean</th>
+                            <th>Imei</th>
+                            <th>Status</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in category.products %}
+                                <tr>
+                                    <td>{{ product.brand != null ? product.brand.name : '' }}</td>
+                                    <td>{{ product.model != null ? product.model.name : '' }}</td>
+                                    <td>{{ product.title }}</td>
+                                    <td>{{ product.platform != null ? product.platform.name : '' }}</td>
+                                    <td>{{ product.ean }}</td>
+                                    <td>{{ product.imei }}</td>
+                                    <td class="{{ product.status.className}}">{{ product.status.name }}</td>
+                                    <td>{{ product.createdAt|date('Y-m-d H:i:s', 'Europe/Madrid') }}</td>
+                                    <td>{{ product.updatedAt!=null ? product.updatedAt|date('Y-m-d H:i:s', 'Europe/Madrid') : '' }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </div>
+    <!-- end: page -->
+    </section>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/media/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js') }}"></script>
+    <!-- Specific Page Vendor -->
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="{{ asset('/js/theme.js') }}"></script>
+
+    <!-- Theme Custom -->
+    <script src="{{ asset('/js/custom.js') }}"></script>
+
+    <!-- Theme Initialization Files -->
+    <script src="{{ asset('/js/theme.init.js') }}"></script>
+
+    <script src="{{ asset('/js/examples/examples.datatables.default.js') }}"></script>
+
+    <script src="{{ asset('/js/app/product/product-form.js') }}"></script>
+    <script src="{{ asset('/js/app/util/form-util.js') }}"></script>
+
+    {% for flash_message in app.session.flashbag.get('success') %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function(event) {
+                new PNotify({
+                    title: 'Success',
+                    text: '{{ flash_message }}',
+                    type: 'success',
+                    addclass: 'icon-nb'
+                });
+            });
+        </script>
+    {% endfor %}
+
+{% endblock javascripts %}

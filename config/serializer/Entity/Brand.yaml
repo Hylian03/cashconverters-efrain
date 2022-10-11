@@ -1,0 +1,4 @@
+App\Entity\Brand:
+  attributes:
+    name:
+      groups: ['product']

@@ -1,0 +1,4 @@
+App\Entity\Model:
+  attributes:
+    name:
+      groups: ['product']

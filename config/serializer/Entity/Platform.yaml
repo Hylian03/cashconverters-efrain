@@ -1,0 +1,4 @@
+App\Entity\Platform:
+  attributes:
+    name:
+      groups: ['product']

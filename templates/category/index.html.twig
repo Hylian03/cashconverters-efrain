@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cash Converters | Home{% endblock %}
+
+{% block css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('/vendor/datatables/media/css/dataTables.bootstrap5.css') }}" />
+{% endblock css %}
+
+{% block body %}
+
+
+    <header class="page-header">
+        <h2>Home</h2>
+
+        <div class="right-wrapper text-end">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="{{ url('app_home') }}">
+                        <i class="bx bx-home-alt"></i>
+                    </a>
+                </li>
+
+                <li><span>Categories</span></li>
+
+            </ol>
+            <span class="sidebar-right-toggle"></span>
+        </div>
+    </header>
+
+    <div class="row">
+        <div class="col-md-12">
+            <section class="card mb-4">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                    <h2 class="card-title">Categories</h2>
+                </header>
+
+                <div class="card-body">
+
+                    <table class="table table-bordered table-striped mb-0" id="datatable-default">
+
+                        <thead>
+                        <tr>
+                            <th class="sorting_disabled">Features</th>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Created at</th>
+                            <th>Updated at</th>
+                            <th>Number of products</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for category in categories %}
+                            <tr>
+                                <td class="text-center">
+                                    <a href="{{ url('app_category_features', {'id': category.id}) }}" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                                </td>
+                                <td>{{ category.name }}</td>
+                                <td>{{ category.description }}</td>
+                                <td class="{{ category.status.classname }}">{{ category.status.name }}</td>
+                                <td>{{ category.createdAt|date('Y-m-d H:i:s', 'Europe/Madrid') }}</td>
+                                <td>{{ category.updatedAt!=null ? category.updatedAt|date('Y-m-d H:i:s', 'Europe/Madrid') : '' }}</td>
+                                <td>{{ category.products.count }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- end: page -->
+    </section>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('/vendor/datatables/media/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/media/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/Buttons-1.4.2/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('/vendor/datatables/extras/TableTools/JSZip-2.5.0/jszip.min.js') }}"></script>
+    <!-- Specific Page Vendor -->
+
+    <!-- Theme Base, Components and Settings -->
+    <script src="{{ asset('/js/theme.js') }}"></script>
+
+    <!-- Theme Custom -->
+    <script src="{{ asset('/js/custom.js') }}"></script>
+
+    <!-- Theme Initialization Files -->
+    <script src="{{ asset('/js/theme.init.js') }}"></script>
+
+    <script src="{{ asset('/js/examples/examples.datatables.default.js') }}"></script>
+{% endblock javascripts %}

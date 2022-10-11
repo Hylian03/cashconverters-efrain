@@ -1,0 +1,259 @@
+<!doctype html>
+<html class="fixed">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+
+    <title>{% block title %}Cash Converters{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
+    <meta name="description" content="Prueba técnica">
+    <meta name="author" content="efraín.es">
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <!-- Web Fonts  -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+    {% block css %}
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/animate/animate.compat.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/magnific-popup/magnific-popup.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/select2/css/select2.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/select2-bootstrap-theme/select2-bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ asset('vendor/pnotify/pnotify.custom.css') }}" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+
+    <!-- Skin CSS -->
+    <link rel="stylesheet" href="{{ asset('css/skins/default.css') }}" />
+
+    <!-- Theme Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+    {% endblock %}
+
+    <!-- Head Libs -->
+    <script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
+
+</head>
+<body>
+<section class="body">
+
+    <!-- start: header -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="{{ url('app_home') }}" class="logo">
+                <img src="{{ asset('img/logo.png') }}" width="175" height="35" alt="Home" />
+            </a>
+
+            <div class="d-md-none toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
+                <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
+            </div>
+
+        </div>
+
+        <!-- start: search & user box -->
+        <div class="header-right">
+
+            <span class="separator"></span>
+
+            <div id="userbox" class="userbox">
+                <a href="#" data-bs-toggle="dropdown">
+                    <figure class="profile-picture">
+                        <img src="{{ asset('img/!logged-user.jpg') }}" alt="Joseph Doe" class="rounded-circle" data-lock-picture="{{ asset('img/!logged-user.jpg') }}" />
+                    </figure>
+                    <div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+                        <span class="name">{{ app.user.email }}</span>
+                        <span class="role">{{ is_granted('ROLE_ADMIN') ? 'Administrator' : 'User' }}</span>
+                    </div>
+
+                    <i class="fa custom-caret"></i>
+                </a>
+
+                <div class="dropdown-menu">
+                    <ul class="list-unstyled mb-2">
+                        <li class="divider"></li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="{{ path('logout') }}"><i class="bx bx-power-off"></i> Logout</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end: search & user box -->
+    </header>
+    <!-- end: header -->
+
+    <div class="inner-wrapper">
+        <!-- start: sidebar -->
+        <aside id="sidebar-left" class="sidebar-left">
+
+            <div class="sidebar-header">
+                <div class="sidebar-title">
+                    Navigation
+                </div>
+                <div class="sidebar-toggle d-none d-md-block" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                    <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
+                </div>
+            </div>
+
+            <div class="nano">
+                <div class="nano-content">
+                    <nav id="menu" class="nav-main" role="navigation">
+
+                        <ul class="nav nav-main">
+                            <li>
+                                <a class="nav-link" href="{{ url('app_home') }}">
+                                    <i class="bx bx-home-alt" aria-hidden="true"></i>
+                                    <span>Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ url('app_category') }}">
+                                    <i class="bx bx-category" aria-hidden="true"></i>
+                                    <span>Categories</span>
+                                </a>
+                            </li>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <li class="nav-parent">
+                                    <a class="nav-link" href="#">
+                                        <i class="bx bx-user" aria-hidden="true"></i>
+                                        <span>Users</span>
+                                    </a>
+                                    <ul class="nav nav-children">
+                                        <li>
+                                            <a class="nav-link" href="{{ path('app_users_list_database') }}">
+                                                Database
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link" href="{{ path('app_users_list_reqresin') }}">
+                                                reqres.in
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                </div>
+
+                <script>
+                    // Maintain Scroll Position
+                    if (typeof localStorage !== 'undefined') {
+                        if (localStorage.getItem('sidebar-left-position') !== null) {
+                            var initialPosition = localStorage.getItem('sidebar-left-position'),
+                                sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+
+                            sidebarLeft.scrollTop = initialPosition;
+                        }
+                    }
+                </script>
+
+            </div>
+
+        </aside>
+        <!-- end: sidebar -->
+
+        <section role="main" class="content-body">
+
+            <!-- start: page -->
+        {% block body %}{% endblock %}
+            <!-- end: page -->
+        </section>
+    </div>
+
+    <aside id="sidebar-right" class="sidebar-right">
+        <div class="nano">
+            <div class="nano-content">
+                <a href="#" class="mobile-close d-md-none">
+                    Collapse <i class="fas fa-chevron-right"></i>
+                </a>
+
+                <div class="sidebar-right-wrapper">
+
+                    <div class="sidebar-widget widget-calendar">
+                        <h6>Upcoming Tasks</h6>
+                        <div data-plugin-datepicker data-plugin-skin="dark"></div>
+
+                        <ul>
+                            <li>
+                                <time datetime="2021-04-19T00:00+00:00">04/19/2021</time>
+                                <span>Company Meeting</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget widget-friends">
+                        <h6>Friends</h6>
+                        <ul>
+                            <li class="status-online">
+                                <figure class="profile-picture">
+                                    <img src="{{ asset('img/!sample-user.jpg') }}" alt="Joseph Doe" class="rounded-circle">
+                                </figure>
+                                <div class="profile-info">
+                                    <span class="name">Joseph Doe Junior</span>
+                                    <span class="title">Hey, how are you?</span>
+                                </div>
+                            </li>
+                            <li class="status-online">
+                                <figure class="profile-picture">
+                                    <img src="{{ asset('img/!sample-user.jpg') }}" alt="Joseph Doe" class="rounded-circle">
+                                </figure>
+                                <div class="profile-info">
+                                    <span class="name">Joseph Doe Junior</span>
+                                    <span class="title">Hey, how are you?</span>
+                                </div>
+                            </li>
+                            <li class="status-offline">
+                                <figure class="profile-picture">
+                                    <img src="{{ asset('img/!sample-user.jpg') }}" alt="Joseph Doe" class="rounded-circle">
+                                </figure>
+                                <div class="profile-info">
+                                    <span class="name">Joseph Doe Junior</span>
+                                    <span class="title">Hey, how are you?</span>
+                                </div>
+                            </li>
+                            <li class="status-offline">
+                                <figure class="profile-picture">
+                                    <img src="{{ asset('img/!sample-user.jpg') }}" alt="Joseph Doe" class="rounded-circle">
+                                </figure>
+                                <div class="profile-info">
+                                    <span class="name">Joseph Doe Junior</span>
+                                    <span class="title">Hey, how are you?</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </aside>
+</section>
+
+{% block javascripts %}
+<!-- Vendor -->
+<script src="{{ asset('vendor/jquery/jquery.js') }}"></script>
+<script src="{{ asset('vendor/jquery-browser-mobile/jquery.browser.mobile.js') }}"></script>
+<script src="{{ asset('vendor/popper/umd/popper.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('vendor/common/common.js') }}"></script>
+<script src="{{ asset('vendor/nanoscroller/nanoscroller.js') }}"></script>
+<script src="{{ asset('vendor/magnific-popup/jquery.magnific-popup.js') }}"></script>
+<script src="{{ asset('vendor/jquery-placeholder/jquery.placeholder.js') }}"></script>
+<!-- Notifications -->
+<script src="{{ asset('vendor/pnotify/pnotify.custom.js') }}"></script>
+<script src="{{ asset('js/examples/examples.notifications.js') }}"></script>
+
+
+{% endblock %}
+</body>
+</html>

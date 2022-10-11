@@ -1,0 +1,16 @@
+App\Entity\Category:
+  attributes:
+    id:
+      groups: ['category', 'product']
+    name:
+      groups: ['category', 'product']
+    description:
+      groups: ['category', 'product']
+    status:
+      groups: ['category', 'product']
+    createdat:
+      groups: ['category', 'product']
+    updatedat:
+      groups: ['category', 'product']
+    products:
+      groups: ['category']

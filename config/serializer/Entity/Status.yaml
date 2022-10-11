@@ -1,0 +1,8 @@
+App\Entity\Status:
+  attributes:
+    name:
+      groups: ['category', 'product']
+    description:
+      groups: ['category', 'product']
+    classname:
+      groups: ['category', 'product']

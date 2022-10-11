@@ -1,0 +1,45 @@
+/* Breadcrumbs */
+.breadcrumbs a,
+.breadcrumbs a > span {
+    color: white !important;
+}
+
+.breadcrumbs a:hover span {
+    text-decoration: underline !important;
+}
+/* Breadcrumbs END */
+
+/* Form */
+.card-category-info label.required,
+form label.required,
+form label {
+    color: inherit;
+    font-size: inherit;
+    font-weight: initial;
+    top: initial;
+    position: initial;
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+}
+
+.card-category-info .form-control.col-sm-9,
+form .form-control.col-sm-9 {
+    width: 74%;
+    display: inline-block;
+}
+
+form[name=register] input.required {
+    font-size: 1.25rem;
+    top: initial;
+    color: initial;
+    font-weight: 400;
+}
+/* Form END */
+
+/* Avatar */
+.avatar {
+    max-width: 50px;
+    margin: auto;
+    display: table;
+}
+/* Avatar END */

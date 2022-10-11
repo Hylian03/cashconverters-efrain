@@ -1,0 +1,13 @@
+{{ form_start(form) }}
+<div class="my-custom-class-for-errors">
+    {{ form_errors(form) }}
+</div>
+
+{% for categoryquestion in category.categoryquestions|sort((a, b) => a.position <=> b.position) %}
+    {% if form[ categoryquestion.question.name|lower ] is defined %}
+    <div class="form-group row pb-3">
+        {{ form_row(form[ categoryquestion.question.name|lower ]) }}
+    </div>
+    {% endif %}
+{% endfor %}
+{{ form_end(form) }}
